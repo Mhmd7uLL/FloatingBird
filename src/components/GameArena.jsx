@@ -1,3 +1,5 @@
+import { useEffect, useRef } from "react";
+
 function GameArena({
   arenaRef,
   birdRef,
@@ -6,6 +8,7 @@ function GameArena({
   pipes,
   handStatus,
   handY,
+  handLandmarks,
   gestureName,
   gestureScore,
   gameOver,
@@ -13,6 +16,91 @@ function GameArena({
   score,
   onRestart,
 }) {
+  const landmarksCanvasRef = useRef(null);
+
+  useEffect(() => {
+    const canvas = landmarksCanvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const rect = canvas.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, width, height);
+
+    // Jangan gambar jika kamera mati atau tangan tidak terdeteksi.
+    if (
+      cameraStatus !== "active" ||
+      !handLandmarks ||
+      handLandmarks.length === 0
+    ) {
+      return;
+    }
+
+    // Hubungan antartitik landmark tangan MediaPipe.
+    const connections = [
+      [0, 1],
+      [1, 2],
+      [2, 3],
+      [3, 4],
+      [0, 5],
+      [5, 6],
+      [6, 7],
+      [7, 8],
+      [5, 9],
+      [9, 10],
+      [10, 11],
+      [11, 12],
+      [9, 13],
+      [13, 14],
+      [14, 15],
+      [15, 16],
+      [13, 17],
+      [17, 18],
+      [18, 19],
+      [19, 20],
+      [0, 17],
+    ];
+
+    // Gambar garis penghubung.
+    ctx.strokeStyle = "#00FFB4";
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+
+    connections.forEach(([start, end]) => {
+      const a = handLandmarks[start];
+      const b = handLandmarks[end];
+
+      if (!a || !b) return;
+
+      ctx.beginPath();
+      ctx.moveTo((1 - a.x) * width, a.y * height);
+      ctx.lineTo((1 - b.x) * width, b.y * height);
+      ctx.stroke();
+    });
+
+    // Gambar 21 titik landmark.
+    handLandmarks.forEach((point) => {
+      ctx.beginPath();
+      ctx.arc((1 - point.x) * width, point.y * height, 3, 0, Math.PI * 2);
+
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fill();
+
+      ctx.strokeStyle = "#00FFB4";
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    });
+  }, [handLandmarks, cameraStatus]);
+
   return (
     <section className="game-section">
       <div className="game-heading">
@@ -40,6 +128,14 @@ function GameArena({
               muted
               aria-label="Preview webcam"
             />
+
+            <canvas
+              ref={landmarksCanvasRef}
+              className="arena-landmarks-canvas"
+            />
+
+            {/* Grid pelacakan */}
+            {cameraStatus === "active" && <div className="arena-camera-grid" />}
 
             {cameraStatus !== "active" && (
               <div className="arena-camera-placeholder">

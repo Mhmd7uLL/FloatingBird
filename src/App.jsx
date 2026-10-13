@@ -13,7 +13,7 @@ function App() {
   const { videoRef, cameraStatus, cameraError, toggleCamera } = useCamera();
   const birdRef = useRef(null);
   const isPausedRef = useRef(false);
-  const { handStatus, handY, gestureName, gestureScore } = useHandTracking({
+  const { handStatus, handY, gestureName, gestureScore, handLandmarks } = useHandTracking({
     cameraStatus,
     videoRef,
     birdRef,
@@ -46,6 +46,7 @@ function App() {
         pipes={pipes}
         handStatus={handStatus}
         handY={handY}
+        handLandmarks={handLandmarks}
         gestureName={gestureName}
         gestureScore={gestureScore}
         gameOver={gameOver}

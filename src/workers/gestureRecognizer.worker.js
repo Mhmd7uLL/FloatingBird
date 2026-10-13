@@ -93,6 +93,10 @@ self.onmessage = async (event) => {
         handY: Math.max(0, Math.min(1, handY)),
         gestureName: gesture?.categoryName || "None",
         gestureScore: gesture?.score || 0,
+        landmarks: landmarks.map((point) => ({
+          x: point.x,
+          y: point.y,
+        }))
       });
     } catch (error) {
       self.postMessage({

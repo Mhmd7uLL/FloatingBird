@@ -30,7 +30,7 @@ export function useGame({ handStatus, gestureName, gestureScore }) {
     }
 
     // Open Palm: resume.
-    else if (gestureName === "Open_Palm" && gestureScore >= 0.55) {
+    else if (gestureName === "Open_Palm" && gestureScore >= 0.50) {
       candidate = "Open_Palm";
     }
 

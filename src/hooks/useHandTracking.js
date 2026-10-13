@@ -10,6 +10,7 @@ export function useHandTracking({
   const [handY, setHandY] = useState(0.5);
   const [gestureName, setGestureName] = useState("None");
   const [gestureScore, setGestureScore] = useState(0);
+  const [handLandmarks, setHandLandmarks] = useState([]);
 
   useEffect(() => {
     if (cameraStatus !== "active") {
@@ -76,6 +77,7 @@ export function useHandTracking({
             setGestureName(data.gestureName);
             setGestureScore(data.gestureScore);
             setHandStatus("detected");
+            setHandLandmarks(data.landmarks || []);
 
             lastUiUpdate = now;
           }
@@ -83,6 +85,7 @@ export function useHandTracking({
           setHandStatus("searching");
           setGestureName("None");
           setGestureScore(0);
+          setHandLandmarks([]);
 
           lastUiUpdate = now;
         }
@@ -178,5 +181,6 @@ export function useHandTracking({
     handY,
     gestureName,
     gestureScore,
+    handLandmarks,
   };
 }
