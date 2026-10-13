@@ -8,10 +8,11 @@ Game 2D penggunaan fitur AI untuk interaktivitas dalam bermain. Memberikan penga
 3. Model: MediaPipe Hand LandMarker
 
 # Game System
-1. Pengguna akan ditugaskan untuk menggerakkan burung melewati pipa dengan cara menyalakan webcam dan membuka telapak tangan
-2. Jika berhasil melewati pipa, maka score akan bertambah 1
-3. Jika menabrak pipa, maka game over dan score akan terulang ke 0 jika main kembali
-4. Jika pengguna menutup telapak tangan di tengah permainan, maka game akan pause
+1. Pengguna akan ditugaskan untuk menggerakkan burung melewati pipa dengan cara menyalakan webcam lalu membuka telapak tangan dengan status "Open Palm"
+2. Game akan dimulai dengan status Open Palm confidence minimal 55% 
+3. Jika berhasil melewati pipa, maka score akan bertambah 1
+4. Jika menabrak pipa, maka game over dan score akan terulang ke 0 jika main kembali
+5. Game pause akan terjadi jika pengguna mengesampingkan telapak tangan dari webcam, ataupun menutup webcam sampai statusnya "Closed Fist" dengan status confidence 75%
 
 # How to Run Project
 1. Clone repository ini
