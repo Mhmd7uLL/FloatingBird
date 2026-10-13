@@ -1,0 +1,658 @@
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  width: min(1240px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 28px 0;
+}
+
+.topbar,
+.brand,
+.connection-status,
+.camera-heading,
+.game-heading,
+.app-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.topbar {
+  margin-bottom: 64px;
+}
+
+.brand {
+  justify-content: flex-start;
+  gap: 12px;
+  text-decoration: none;
+  color: #182a3a;
+}
+
+.brand-icon {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  color: white;
+  background: #237b70;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.brand strong,
+.brand small {
+  display: block;
+}
+
+.brand strong {
+  font-size: 17px;
+}
+
+.brand small {
+  margin-top: 3px;
+  color: #80909c;
+  font-size: 9px;
+  letter-spacing: 2px;
+}
+
+.connection-status {
+  justify-content: flex-start;
+  gap: 8px;
+  padding: 10px 14px;
+  border: 1px solid #e4ebe8;
+  border-radius: 999px;
+  background: white;
+  color: #64736f;
+  font-size: 12px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #e0a64c;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: 54px;
+  margin-bottom: 64px;
+}
+
+.eyebrow,
+.section-label {
+  margin: 0;
+  color: #237b70;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  margin: 20px 0;
+  color: #182a3a;
+  font-size: clamp(34px, 4.2vw, 53px);
+  line-height: 1.12;
+  letter-spacing: -2px;
+}
+
+.hero h1 span {
+  color: #237b70;
+}
+
+.hero-description {
+  max-width: 460px;
+  color: #74828d;
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+.feature-list {
+  display: grid;
+  gap: 22px;
+  margin-top: 34px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+
+.feature-number {
+  display: grid;
+  flex: 0 0 36px;
+  height: 36px;
+  place-items: center;
+  border-radius: 12px;
+  background: #e5f2ed;
+  color: #237b70;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.feature-item strong {
+  color: #263847;
+  font-size: 13px;
+}
+
+.feature-item p {
+  margin: 5px 0 0;
+  color: #82909b;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.camera-card {
+  padding: 22px;
+  border: 1px solid #e5ebe9;
+  border-radius: 22px;
+  background: #fff;
+  box-shadow: 0 18px 55px rgb(32 66 57 / 6%);
+}
+
+.camera-heading {
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.camera-heading h2,
+.game-heading h2 {
+  margin: 7px 0 0;
+  color: #1b2e3e;
+  font-size: 19px;
+  letter-spacing: -0.5px;
+}
+
+.offline-badge {
+  padding: 7px 9px;
+  border-radius: 7px;
+  background: #fff2e6;
+  color: #b87532;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.privacy-note {
+  margin: 16px 0 0;
+  color: #87949d;
+  font-size: 10px;
+  line-height: 1.7;
+}
+
+.game-section {
+  margin-bottom: 35px;
+}
+
+.game-heading {
+  margin-bottom: 18px;
+}
+
+.score-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  padding: 11px 17px;
+  border: 1px solid #e3ebe7;
+  border-radius: 13px;
+  background: white;
+}
+
+.score-card span {
+  color: #82918e;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.score-card strong {
+  color: #237b70;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.game-arena {
+  position: relative;
+  min-height: 500px;
+  overflow: hidden;
+  border: 1px solid #dcebe5;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #e9f7f5 0%, #f6fbf7 100%);
+}
+
+.arena-sun {
+  position: absolute;
+  top: 30px;
+  right: 10%;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #f7dba0;
+}
+
+.arena-cloud {
+  position: absolute;
+  width: 70px;
+  height: 20px;
+  border-radius: 20px;
+  background: rgb(255 255 255 / 75%);
+}
+
+.arena-cloud::before,
+.arena-cloud::after {
+  position: absolute;
+  bottom: 5px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: inherit;
+  content: "";
+}
+
+.arena-cloud::before {
+  left: 10px;
+}
+
+.arena-cloud::after {
+  right: 10px;
+}
+
+.cloud-one {
+  top: 55px;
+  left: 16%;
+}
+
+.cloud-two {
+  top: 110px;
+  right: 18%;
+  transform: scale(0.75);
+}
+
+.arena-pipe {
+  position: absolute;
+  right: auto;
+  z-index: 1;
+  width: 43px;
+  border: 3px solid #328b74;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #57b998, #86d7b0);
+  box-shadow: 3px 0 8px rgb(32 100 75 / 8%);
+}
+
+.arena-bird {
+  position: absolute;
+  top: 45%;
+  left: 25%;
+  z-index: 1;
+  font-size: 36px;
+  filter: drop-shadow(0 5px 4px rgb(32 67 48 / 12%));
+  animation: bird-float 2s ease-in-out infinite;
+}
+
+.arena-message {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2;
+  width: min(310px, calc(100% - 32px));
+  padding: 22px;
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 18px;
+  background: rgb(255 255 255 / 90%);
+  box-shadow: 0 12px 35px rgb(43 76 65 / 8%);
+  text-align: center;
+  transform: translate(-50%, -50%);
+  backdrop-filter: blur(10px);
+}
+
+.play-icon {
+  display: grid;
+  width: 38px;
+  height: 38px;
+  margin: 0 auto 12px;
+  place-items: center;
+  border-radius: 50%;
+  background: #237b70;
+  color: white;
+  font-size: 12px;
+}
+
+.arena-message h3 {
+  margin: 0;
+  color: #203647;
+  font-size: 17px;
+}
+
+.arena-message p {
+  margin: 9px 0 0;
+  color: #7e8d96;
+  font-size: 11px;
+  line-height: 1.7;
+}
+
+.arena-ground {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 18px;
+  border-top: 4px solid #7abf9e;
+  background: #c6e8b8;
+}
+
+.game-note {
+  margin: 14px 0 0;
+  color: #82918e;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.game-note span {
+  margin: 0 6px;
+  color: #e0a64c;
+}
+
+.app-footer {
+  gap: 12px;
+  padding-top: 23px;
+  border-top: 1px solid #e5ebe9;
+  color: #91a09d;
+  font-size: 10px;
+}
+
+.app-footer span:first-child {
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+@keyframes bird-float {
+  0%,
+  100% {
+    transform: translateY(-4px) rotate(-3deg);
+  }
+
+  50% {
+    transform: translateY(5px) rotate(3deg);
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    width: calc(100% - 28px);
+    padding-top: 18px;
+  }
+
+  .topbar {
+    margin-bottom: 45px;
+  }
+
+  .connection-status {
+    padding: 8px 10px;
+    font-size: 10px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    gap: 35px;
+    margin-bottom: 45px;
+  }
+
+  .hero h1 {
+    font-size: clamp(32px, 8vw, 45px);
+    letter-spacing: -1.5px;
+  }
+
+  .camera-card {
+    padding: 16px;
+  }
+
+  .game-arena {
+    min-height: 380px;
+  }
+
+  .arena-message {
+    padding: 18px 14px;
+  }
+
+  .app-footer {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 390px) {
+  .brand strong {
+    font-size: 14px;
+  }
+
+  .brand small {
+    font-size: 8px;
+  }
+
+  .connection-status {
+    max-width: 142px;
+    font-size: 9px;
+  }
+}
+
+.status-dot-active {
+  background: #36ad83;
+  box-shadow: 0 0 0 4px rgb(54 173 131 / 12%);
+}
+
+.status-dot-error {
+  background: #d45b51;
+}
+
+.online-badge {
+  background: #e1f5eb;
+  color: #22805e;
+}
+
+.camera-action {
+  margin-top: 10px;
+  padding: 10px 15px;
+  border: 0;
+  border-radius: 9px;
+  background: #237b70;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.camera-action:hover {
+  background: #195f56;
+  transform: translateY(-1px);
+}
+
+.tracking-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 13px;
+  color: #7c8b94;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.tracking-info strong {
+  margin-left: auto;
+  color: #237b70;
+  font-size: 13px;
+}
+
+.tracking-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  background: #98a5aa;
+}
+
+.tracking-detected .tracking-dot {
+  background: #36ad83;
+  box-shadow: 0 0 0 4px rgb(54 173 131 / 12%);
+}
+
+.tracking-loading .tracking-dot {
+  background: #e0a64c;
+}
+
+.tracking-error .tracking-dot {
+  background: #d45b51;
+}
+
+.arena-bird-controlled {
+  animation: none;
+  transition: none;
+  will-change: top;
+}
+
+
+.game-over-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgb(247 249 248 / 78%);
+  text-align: center;
+  backdrop-filter: blur(7px);
+}
+
+.game-over-icon {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border-radius: 16px;
+  background: #fff0e9;
+  color: #d46b47;
+  font-size: 26px;
+}
+
+.game-over-overlay h3 {
+  margin: 15px 0 0;
+  color: #182a3a;
+  font-size: 25px;
+}
+
+.game-over-overlay p {
+  margin: 9px 0 20px;
+  color: #73838d;
+  font-size: 12px;
+}
+
+.game-over-overlay button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 10px;
+  background: #237b70;
+  color: white;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 200ms ease, transform 200ms ease;
+}
+
+.game-over-overlay button:hover {
+  background: #195f56;
+  transform: translateY(-2px);
+}
+
+.camera-controls {
+  margin-top: 12px;
+}
+
+.camera-action-stop {
+  background: #b84d43;
+}
+
+.camera-action-stop:hover {
+  background: #96382f;
+}
+
+.arena-camera-preview {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 4;
+  width: 150px;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid rgb(255 255 255 / 80%);
+  border-radius: 12px;
+  background: #122a32;
+  box-shadow: 0 5px 18px rgb(25 53 46 / 12%);
+}
+
+.arena-camera-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scaleX(-1);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.arena-camera-visible {
+  opacity: 1;
+}
+
+.arena-camera-placeholder {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  color: #a9c6c0;
+}
+
+.arena-camera-placeholder span {
+  color: #68d4b6;
+  font-size: 27px;
+}
+
+.arena-camera-placeholder small {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+}
+
+.arena-camera-label {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 5px 7px;
+  border-radius: 5px;
+  background: rgb(18 42 50 / 80%);
+  color: #e9f7f3;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+@media (max-width: 480px) {
+  .arena-camera-preview {
+    width: 112px;
+  }
+
+  .game-arena {
+    min-height: 330px;
+  }
+}
