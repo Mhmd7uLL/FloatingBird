@@ -11,15 +11,20 @@ import "./App.css";
 
 function App() {
   const { videoRef, cameraStatus, cameraError, toggleCamera } = useCamera();
-  const birdRef = useRef(null)
-  const { handStatus, handY } = useHandTracking({
+  const birdRef = useRef(null);
+  const isPausedRef = useRef(false);
+  const { handStatus, handY, gestureName, gestureScore } = useHandTracking({
     cameraStatus,
     videoRef,
     birdRef,
+    isPausedRef,
   });
-  const { arenaRef, pipes, score, gameOver, restartGame } = useGame({
+  const { arenaRef, pipes, score, gameOver, isPaused, restartGame } = useGame({
     handStatus,
+    gestureName,
+    gestureScore,
   });
+  isPausedRef.current = isPaused;
 
   return (
     <main className="app-shell">
@@ -41,7 +46,10 @@ function App() {
         pipes={pipes}
         handStatus={handStatus}
         handY={handY}
+        gestureName={gestureName}
+        gestureScore={gestureScore}
         gameOver={gameOver}
+        isPaused={isPaused}
         score={score}
         onRestart={restartGame}
       />

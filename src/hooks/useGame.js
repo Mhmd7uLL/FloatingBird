@@ -6,18 +6,71 @@ const INITIAL_PIPES = [
   { id: 3, x: 190, gapTop: 28, passed: false },
 ];
 
-export function useGame({ handStatus }) {
+export function useGame({ handStatus, gestureName, gestureScore }) {
   const arenaRef = useRef(null);
+  const gestureCandidateRef = useRef({
+    name: null,
+    count: 0,
+  });
+  const lastTriggeredGestureRef = useRef(null);
 
   const [score, setScore] = useState(0);
   const [pipes, setPipes] = useState(() =>
-    INITIAL_PIPES.map((pipe) => ({ ...pipe }))
+    INITIAL_PIPES.map((pipe) => ({ ...pipe })),
   );
   const [gameOver, setGameOver] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
-  // 1. Menggerakkan pipa.
   useEffect(() => {
-    if (handStatus !== "detected" || gameOver) return;
+    let candidate = null;
+
+    // Closed Fist: pause.
+    if (gestureName === "Closed_Fist" && gestureScore >= 0.75) {
+      candidate = "Closed_Fist";
+    }
+
+    // Open Palm: resume.
+    else if (gestureName === "Open_Palm" && gestureScore >= 0.55) {
+      candidate = "Open_Palm";
+    }
+
+    // Jika tidak memenuhi syarat, reset kandidat.
+    if (!candidate) {
+      gestureCandidateRef.current = {
+        name: null,
+        count: 0,
+      };
+      return;
+    }
+
+    // Hitung hasil klasifikasi berturut-turut.
+    if (gestureCandidateRef.current.name === candidate) {
+      gestureCandidateRef.current.count += 1;
+    } else {
+      gestureCandidateRef.current = {
+        name: candidate,
+        count: 1,
+      };
+    }
+
+    // Jalankan aksi setelah dua hasil berturut-turut.
+    if (
+      gestureCandidateRef.current.count >= 2 &&
+      lastTriggeredGestureRef.current !== candidate
+    ) {
+      if (candidate === "Closed_Fist") {
+        setIsPaused(true);
+      } else if (candidate === "Open_Palm") {
+        setIsPaused(false);
+      }
+
+      lastTriggeredGestureRef.current = candidate;
+    }
+  }, [gestureName, gestureScore]);
+
+  // Animasi Menggerakkan pipa.
+  useEffect(() => {
+    if (handStatus !== "detected" || gameOver || isPaused) return;
 
     let animationId;
     let previousTime = 0;
@@ -29,10 +82,7 @@ export function useGame({ handStatus }) {
         previousTime = currentTime;
       }
 
-      const deltaTime = Math.min(
-        (currentTime - previousTime) / 1000,
-        0.05
-      );
+      const deltaTime = Math.min((currentTime - previousTime) / 1000, 0.05);
 
       previousTime = currentTime;
 
@@ -42,9 +92,7 @@ export function useGame({ handStatus }) {
           x: pipe.x - speed * deltaTime,
         }));
 
-        let rightMost = Math.max(
-          ...nextPipes.map((pipe) => pipe.x)
-        );
+        let rightMost = Math.max(...nextPipes.map((pipe) => pipe.x));
 
         return nextPipes.map((pipe) => {
           if (pipe.x < -15) {
@@ -70,11 +118,11 @@ export function useGame({ handStatus }) {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [handStatus, gameOver]);
+  }, [handStatus, gameOver, isPaused]);
 
   // 2. Memeriksa tabrakan burung dengan pipa dan tanah.
   useEffect(() => {
-    if (handStatus !== "detected" || gameOver) return;
+    if (handStatus !== "detected" || gameOver || isPaused) return;
 
     let animationId;
 
@@ -129,21 +177,17 @@ export function useGame({ handStatus }) {
     return () => {
       cancelAnimationFrame(animationId);
     };
-  }, [handStatus, gameOver]);
+  }, [handStatus, gameOver, isPaused]);
 
   // 3. Menambahkan skor ketika burung melewati pipa.
   useEffect(() => {
-    if (handStatus !== "detected" || gameOver) return;
+    if (handStatus !== "detected" || gameOver || isPaused) return;
 
-    const newlyPassed = pipes.filter(
-      (pipe) => !pipe.passed && pipe.x < 20
-    );
+    const newlyPassed = pipes.filter((pipe) => !pipe.passed && pipe.x < 20);
 
     if (newlyPassed.length === 0) return;
 
-    const passedIds = new Set(
-      newlyPassed.map((pipe) => pipe.id)
-    );
+    const passedIds = new Set(newlyPassed.map((pipe) => pipe.id));
 
     setScore((currentScore) => {
       return currentScore + newlyPassed.length;
@@ -151,10 +195,8 @@ export function useGame({ handStatus }) {
 
     setPipes((currentPipes) =>
       currentPipes.map((pipe) =>
-        passedIds.has(pipe.id)
-          ? { ...pipe, passed: true }
-          : pipe
-      )
+        passedIds.has(pipe.id) ? { ...pipe, passed: true } : pipe,
+      ),
     );
   }, [pipes, handStatus, gameOver]);
 
@@ -170,6 +212,7 @@ export function useGame({ handStatus }) {
     pipes,
     score,
     gameOver,
+    isPaused,
     restartGame,
   };
 }

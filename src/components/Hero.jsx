@@ -1,10 +1,11 @@
-
 function Hero({
   cameraStatus,
   cameraError,
   toggleCamera,
   handStatus,
   handY,
+  gestureName,
+  gestureScore,
 }) {
   return (
     <section className="hero">
@@ -18,8 +19,8 @@ function Hero({
         </h1>
 
         <p className="hero-description">
-          Kendalikan burung dengan menggerakkan tangan di depan webcam.
-          Hindari pipa dan raih skor tertinggi!
+          Kendalikan burung dengan menggerakkan tangan di depan webcam. Hindari
+          pipa dan raih skor tertinggi!
         </p>
 
         <div className="feature-list">
@@ -96,8 +97,7 @@ function Hero({
           <span>
             {handStatus === "idle" && "Deteksi tangan belum aktif"}
 
-            {handStatus === "loading" &&
-              "Memuat model deteksi tangan..."}
+            {handStatus === "loading" && "Memuat model deteksi tangan..."}
 
             {handStatus === "searching" &&
               "Tangan belum terdeteksi. Tunjukkan telapak tangan."}

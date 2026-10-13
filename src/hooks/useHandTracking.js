@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 
-export function useHandTracking({ cameraStatus, videoRef, birdRef }) {
+export function useHandTracking({
+  cameraStatus,
+  videoRef,
+  birdRef,
+  isPausedRef,
+}) {
   const [handStatus, setHandStatus] = useState("idle");
   const [handY, setHandY] = useState(0.5);
   const [gestureName, setGestureName] = useState("None");
@@ -61,7 +66,7 @@ export function useHandTracking({ cameraStatus, videoRef, birdRef }) {
 
         if (data.handFound) {
           // Perbarui posisi burung langsung tanpa menunggu render React.
-          if (birdRef.current) {
+          if (!isPausedRef.current && birdRef.current) {
             birdRef.current.style.top = `${3 + data.handY * 85}%`;
           }
 

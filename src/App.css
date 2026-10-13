@@ -584,12 +584,20 @@
   background: #96382f;
 }
 
-.arena-camera-preview {
+.arena-camera-widget {
   position: absolute;
   top: 12px;
   right: 12px;
   z-index: 4;
-  width: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 195px;
+}
+
+.arena-camera-preview {
+  position: relative;
+  width: 100%;
   aspect-ratio: 4 / 3;
   overflow: hidden;
   border: 1px solid rgb(255 255 255 / 80%);
@@ -648,11 +656,84 @@
 }
 
 @media (max-width: 480px) {
-  .arena-camera-preview {
-    width: 112px;
+  .arena-camera-widget {
+    width: 148px;
   }
 
   .game-arena {
     min-height: 330px;
   }
+}
+
+.ai-gesture-info {
+  margin-top: 0;
+  padding: 10px;
+  border: 1px solid rgb(226 236 231 / 95%);
+  border-radius: 11px;
+  background: rgb(248 251 249 / 94%);
+  box-shadow: 0 5px 18px rgb(25 53 46 / 8%);
+  backdrop-filter: blur(8px);
+}
+
+.ai-gesture-heading {
+  font-size: 8px;
+}
+
+.ai-gesture-result {
+  margin-top: 9px;
+}
+
+.ai-gesture-result strong {
+  font-size: 11px;
+}
+
+.ai-badge {
+  padding: 5px 7px;
+  border-radius: 6px;
+  background: #dff3e9;
+  color: #237b70;
+  letter-spacing: 0;
+}
+
+.ai-gesture-result > div {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ai-gesture-result small {
+  color: #87949d;
+  font-size: 10px;
+}
+
+.ai-confidence {
+  text-align: right;
+}
+
+.game-paused-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgb(247 249 248 / 45%);
+  text-align: center;
+  backdrop-filter: blur(3px);
+  pointer-events: none;
+}
+
+.game-paused-overlay h3 {
+  margin: 15px 0 0;
+  color: #182a3a;
+  font-size: 25px;
+}
+
+.game-paused-overlay p {
+  margin: 9px 0 0;
+  color: #52656e;
+  font-size: 12px;
+  line-height: 1.8;
 }

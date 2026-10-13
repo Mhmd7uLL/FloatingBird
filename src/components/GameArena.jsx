@@ -6,7 +6,10 @@ function GameArena({
   pipes,
   handStatus,
   handY,
+  gestureName,
+  gestureScore,
   gameOver,
+  isPaused,
   score,
   onRestart,
 }) {
@@ -25,28 +28,56 @@ function GameArena({
       </div>
 
       <div className="game-arena" ref={arenaRef}>
-        <div className="arena-camera-preview">
-          <video
-            ref={videoRef}
-            className={`arena-camera-video ${
-              cameraStatus === "active" ? "arena-camera-visible" : ""
-            }`}
-            autoPlay
-            playsInline
-            muted
-            aria-label="Preview webcam"
-          />
+        <div className="arena-camera-widget">
+          <div className="arena-camera-preview">
+            <video
+              ref={videoRef}
+              className={`arena-camera-video ${
+                cameraStatus === "active" ? "arena-camera-visible" : ""
+              }`}
+              autoPlay
+              playsInline
+              muted
+              aria-label="Preview webcam"
+            />
 
-          {cameraStatus !== "active" && (
-            <div className="arena-camera-placeholder">
-              <span>◎</span>
-              <small>KAMERA OFF</small>
+            {cameraStatus !== "active" && (
+              <div className="arena-camera-placeholder">
+                <span>◎</span>
+                <small>KAMERA OFF</small>
+              </div>
+            )}
+
+            <span className="arena-camera-label">
+              {cameraStatus === "active" ? "● LIVE" : "WEBCAM"}
+            </span>
+          </div>
+          <div className="ai-gesture-info">
+            <div className="ai-gesture-heading">
+              <span>AI GESTURE RECOGNITION</span>
+              <span className="ai-badge">AI</span>
             </div>
-          )}
 
-          <span className="arena-camera-label">
-            {cameraStatus === "active" ? "● LIVE" : "WEBCAM"}
-          </span>
+            <div className="ai-gesture-result">
+              <div>
+                <small>Gestur dikenali</small>
+                <strong>
+                  {handStatus === "detected"
+                    ? gestureName.replaceAll("_", " ")
+                    : "Menunggu gestur..."}
+                </strong>
+              </div>
+
+              <div className="ai-confidence">
+                <small>Confidence</small>
+                <strong>
+                  {handStatus === "detected"
+                    ? `${Math.round(gestureScore * 100)}%`
+                    : "--"}
+                </strong>
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="arena-sun" />
@@ -92,6 +123,20 @@ function GameArena({
             <span className="play-icon">▶</span>
             <h3>Siap untuk terbang?</h3>
             <p>Area permainan akan aktif setelah kontrol tangan tersedia.</p>
+          </div>
+        )}
+
+        {isPaused && !gameOver && (
+          <div className="game-paused-overlay">
+            <span className="game-over-icon">Ⅱ</span>
+
+            <h3>Game Paused</h3>
+
+            <p>
+              AI mendeteksi kepalan tangan.
+              <br />
+              Buka telapak tangan untuk melanjutkan.
+            </p>
           </div>
         )}
 
